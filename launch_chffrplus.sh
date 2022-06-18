@@ -8,6 +8,8 @@ source "$BASEDIR/launch_env.sh"
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
+touch /ONEPLUS
+echo -n 20 > /VERSION
 
 function two_init {
 
