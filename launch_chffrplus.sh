@@ -8,16 +8,30 @@ source "$BASEDIR/launch_env.sh"
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
-touch /ONEPLUS
-echo -n 20 > /VERSION
+if [ ! -f "/BOOTLOGO" ]; then
+  touch /BOOTLOGO
+  #if $(grep -q "letv" /proc/cmdline); then
+  if [ ! -f /LEECO ] && $(grep -q "letv" /proc/cmdline); then
+    # lepro bootlogo
+    touch /LEECO
+    dd if=/data/openpilot/installer/fonts/splash.img of=/dev/block/bootdevice/by-name/splash
+  elif [ ! -f /ONEPLUS ]; then
+    # op3t bootlogo
+    touch /ONEPLUS
+    dd if=/data/openpilot/installer/fonts/logo.bin of=/dev/block/bootdevice/by-name/LOGO
+    cp -f "$BASEDIR/selfdrive/hardware/eon/update.zip" "/sdcard/update.zip";
+    echo -n 20 > /VERSION
+  fi
+  echo =================================================================
+  echo Comma boot logo change complete
+  echo =================================================================
+fi
 
 function two_init {
 
   mount -o remount,rw /system
-  if [ ! -f /ONEPLUS ]; then
+  if [ -f /ONEPLUS ]; then
     sed -i -e 's#/dev/input/event1#/dev/input/event2#g' ~/.bash_profile
-    touch /ONEPLUS
-    echo -n 20 > /VERSION
     mount -o remount,r /system
   fi
 
