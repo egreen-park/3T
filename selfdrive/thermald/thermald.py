@@ -244,8 +244,8 @@ def thermald_thread(end_event, hw_queue):
           fan_controller = TiciFanController()
         elif is_uno or PC:
           fan_controller = UnoFanController()
-        else:
-          fan_controller = EonFanController()
+        #else:  ## update T3 PBI
+          #fan_controller = EonFanController()
     else:
       if sec_since_boot() - panda_state_ts > 3.:
         if onroad_conditions["ignition"]:
@@ -283,7 +283,7 @@ def thermald_thread(end_event, hw_queue):
     )
 
     if fan_controller is not None:
-      msg.deviceState.fanSpeedPercentDesired = fan_controller.update(max_comp_temp, onroad_conditions["ignition"])
+      #msg.deviceState.fanSpeedPercentDesired = fan_controller.update(max_comp_temp, onroad_conditions["ignition"])
 
     is_offroad_for_5_min = (started_ts is None) and ((not started_seen) or (off_ts is None) or (sec_since_boot() - off_ts > 60 * 5))
     if is_offroad_for_5_min and max_comp_temp > OFFROAD_DANGER_TEMP:
