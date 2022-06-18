@@ -11,7 +11,7 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 function two_init {
 
   mount -o remount,rw /system
-  if [ -f /ONEPLUS ] && ! $(grep -q "letv" /proc/cmdline); then
+  if [ ! -f /ONEPLUS ] && ! $(grep -q "letv" /proc/cmdline); then
     sed -i -e 's#/dev/input/event1#/dev/input/event2#g' ~/.bash_profile
     touch /ONEPLUS
     echo -n 20 > /VERSION
