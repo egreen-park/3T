@@ -8,6 +8,7 @@ source "$BASEDIR/launch_env.sh"
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 
+###### ONEPLUS 3T #######
 if [ ! -f "/BOOTLOGO" ]; then
   touch /BOOTLOGO
   #if $(grep -q "letv" /proc/cmdline); then
@@ -26,13 +27,15 @@ if [ ! -f "/BOOTLOGO" ]; then
   echo Comma boot logo change complete
   echo =================================================================
 fi
-
+###### ONEPLUS 3T #######
 function two_init {
+
+###### ONEPLUS 3T #######
 if [ -f /ONEPLUS ]; then
   mount -o remount,rw /system
   sed -i -e 's#/dev/input/event1#/dev/input/event2#g' ~/.bash_profile
   mount -o remount,r /system
-
+###### ONEPLUS 3T #######
 fi
   # set IO scheduler
   setprop sys.io.scheduler noop
@@ -134,10 +137,7 @@ fi
 
   fi
 
-  # One-time fix for a subset of OP3T with gyro orientation offsets.
-  # Remove and regenerate qcom sensor registry. Only done on OP3T mainboards.
-  # Performed exactly once. The old registry is preserved just-in-case, and
-  # doubles as a flag denoting we've already done the reset.
+###### ONEPLUS 3T #######
   if [ -f /ONEPLUS ] && [ ! -f "/persist/comma/op3t-sns-reg-backup" ]; then
     echo "Performing OP3T sensor registry reset"
     mv /persist/sensors/sns.reg /persist/comma/op3t-sns-reg-backup &&
